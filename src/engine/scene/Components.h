@@ -1,11 +1,14 @@
+#pragma once
 #include <glm/glm.hpp>
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+namespace engine {
+
 struct TransformComponent {
     glm::vec3 position;
-    glm::vec3 rotation;
-    glm::vec3 scale;
+    glm::vec3 rotation = {0.0, 0.0, 0.0};
+    glm::vec3 scale = {1.0, 1.0, 1.0};
 
     TransformComponent() = default;
     TransformComponent(const glm::vec3& pos) : position(pos) {}
@@ -18,3 +21,14 @@ struct TransformComponent {
         return trans * rot * scl;
     }
 };
+
+struct SpriteRendererComponent
+{
+	glm::vec4 color{ 1.0f, 1.0f, 1.0f, 1.0f };
+
+	SpriteRendererComponent() = default;
+	SpriteRendererComponent(const SpriteRendererComponent&) = default;
+	SpriteRendererComponent(const glm::vec4& color)
+		: color(color) {}
+};
+}

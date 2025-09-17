@@ -10,6 +10,7 @@ public:
     void PollEvents();
     bool ShouldClose() const;
     void SwapBuffers();
+    GLFWwindow* GetGLFWwindow() { return m_window; }
 private:
     GLFWwindow* m_window;
 };

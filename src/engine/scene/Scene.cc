@@ -1,0 +1,26 @@
+#include "Scene.h"
+#include "Entity.h"
+namespace engine {
+Scene::Scene()
+{
+}
+void Scene::Init() {
+    m_renderer.Init();
+}
+void Scene::SetViewProjection(const glm::mat4& viewProj) {
+    m_viewProj = viewProj;
+}
+void Scene::Render() {
+    auto group = m_registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
+    for (auto entity : group) {
+        auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+        m_renderer.DrawQuad(m_viewProj, transform.GetTransform(), sprite.color);
+    }
+}
+
+ Entity Scene::CreateEntity() {
+	Entity entity = { m_registry.create(), this };
+    entity.AddComponent<TransformComponent>();
+    return entity;
+}
+}

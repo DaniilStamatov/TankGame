@@ -19,6 +19,7 @@ target_include_directories(glad PUBLIC vendor/glad/include)
 
 file(GLOB_RECURSE SOURCE_FILES 
 src/engine/core/*.cc src/engine/core/*.h
+src/engine/scene/*.cc
 src/game/entities/*.cc src/game/entities/*.h
 src/*.cc src/*.h)
 add_executable(TanksGame ${SOURCE_FILES})
@@ -27,4 +28,5 @@ target_link_libraries(TanksGame glm::glm glfw glad)
 target_include_directories(TanksGame PRIVATE
     vendor/glm
     vendor/glad/include
+    vendor/entt/include
 )
