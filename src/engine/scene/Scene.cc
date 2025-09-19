@@ -19,7 +19,11 @@ void Scene::Render() {
     auto group = m_registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
     for (auto entity : group) {
         auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
-        m_renderer.DrawQuad(m_viewProj, transform.GetTransform(), sprite.color);
+        if(!sprite.texture)
+            m_renderer.DrawQuad(m_viewProj, transform.GetTransform(), sprite.color);
+        else {
+            m_renderer.DrawQuad(m_viewProj, transform.GetTransform(), *sprite.texture, sprite.color);
+        }
     }
 }
 

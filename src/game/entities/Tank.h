@@ -2,6 +2,7 @@
 #include <glm/glm.hpp>
 #include "components/TankComponent.h"
 #include "engine/scene/GameObject.h"
+#include <iostream>
 namespace tanks {
 
 class Tank: public GameObject {
@@ -11,10 +12,10 @@ public:
     {
         auto& transform = m_entity.GetComponent<nova::TransformComponent>();
         transform.position = pos;
-        transform.scale = {50.0f, 50.0f, 1.0f};
+        transform.scale = {100.0f, 100.0f, 1.0f};
 
         auto& sprite = m_entity.AddComponent<nova::SpriteRendererComponent>();
-        sprite.color = glm::vec4(0, 1, 0, 1);
+        sprite.texture = nova::Texture::Create("res/textures/tank.jpeg");
  
         m_entity.AddComponent<TankComponent>(100, 5.0f); 
     }
