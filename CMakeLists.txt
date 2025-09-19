@@ -41,6 +41,7 @@ file(GLOB_RECURSE SOURCE_FILES
 add_executable(TanksGame ${SOURCE_FILES})
 target_link_libraries(TanksGame PRIVATE glm::glm glfw glad stb)
 target_include_directories(TanksGame PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
     vendor/glm
     vendor/glad/include
     vendor/entt/include

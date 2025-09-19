@@ -1,8 +1,8 @@
 #pragma once
-#include "../engine/core/IGame.h"
+#include "engine/core/IGame.h"
 #include "entities/Tank.h"
-#include "../engine/scene/Scene.h"
-#include "../engine/scene/Entity.h"
+#include "engine/scene/Scene.h"
+#include "engine/scene/Entity.h"
 #include <iostream>
 namespace tanks {
 class Game : public IGame {

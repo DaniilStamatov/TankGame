@@ -1,6 +1,6 @@
 #pragma once
 #include <glad/glad.h>
-#include "../IndexBuffer.h"
+#include "engine/graphics/IndexBuffer.h"
 
 namespace nova {
 class OpenGLIndexBuffer final : public IndexBuffer

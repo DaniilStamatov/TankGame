@@ -1,5 +1,5 @@
 #include <glad/glad.h>
-#include "../VertexBuffer.h"
+#include "engine/graphics/VertexBuffer.h"
 
 namespace nova {
     class OpenGLVertexBuffer final : public VertexBuffer {

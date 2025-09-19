@@ -1,7 +1,7 @@
 #pragma once
 #include <entt.hpp>
 #include "Components.h"
-#include "../graphics/Renderer.h"
+#include "engine/graphics/Renderer.h"
 namespace nova {
 class Entity;
 class Scene {

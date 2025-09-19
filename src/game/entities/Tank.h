@@ -1,7 +1,7 @@
 #pragma once
 #include <glm/glm.hpp>
 #include "components/TankComponent.h"
-#include "../../engine/scene/GameObject.h"
+#include "engine/scene/GameObject.h"
 namespace tanks {
 
 class Tank: public GameObject {

@@ -1,5 +1,5 @@
 #pragma once
-#include "../VertexArrayObject.h"
+#include "engine/graphics/VertexArrayObject.h"
 
 namespace nova {
     class OpenGLVertexArrayObject final : public VertexArrayObject {  

@@ -1,4 +1,4 @@
-#include "../Texture.h"
+#include "engine/graphics/Texture.h"
 #include <glad/glad.h>
 namespace nova {
     class OpenGLTexture final : public Texture {

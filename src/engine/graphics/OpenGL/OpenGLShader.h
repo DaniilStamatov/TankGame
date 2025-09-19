@@ -1,5 +1,5 @@
 #include <glad/glad.h>
-#include "../Shader.h"
+#include "engine/graphics/Shader.h"
 namespace nova {
 class OpenGLShader final: public Shader {
 public:
