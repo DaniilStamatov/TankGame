@@ -3,7 +3,8 @@
 #include <glm/glm.hpp>
 #include <string>
 #include <memory>
-namespace engine {
+
+namespace nova {
 class Shader {
     public:
         virtual ~Shader() = default;
@@ -14,6 +15,7 @@ class Shader {
         virtual void SetVec4(const std::string& name, const glm::vec4& vector) = 0;
         virtual void SetInt(const std::string& name, int value) = 0;
         virtual void SetFloat(const std::string& name, float value) = 0;
+        static std::unique_ptr<Shader> Create(const std::string& filename);
         static std::unique_ptr<Shader> Create(const std::string& vertexSrc, const std::string& fragmentSrc);
 };
 }

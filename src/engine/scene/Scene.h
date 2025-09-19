@@ -2,12 +2,13 @@
 #include <entt.hpp>
 #include "Components.h"
 #include "../graphics/Renderer.h"
-namespace engine {
+namespace nova {
 class Entity;
 class Scene {
 public:
     Scene();
     void Init();
+    void Shutdown();
     void Render();
     Entity CreateEntity();
     void SetViewProjection(const glm::mat4& viewProj);

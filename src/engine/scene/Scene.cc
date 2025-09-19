@@ -1,12 +1,17 @@
 #include "Scene.h"
 #include "Entity.h"
-namespace engine {
+namespace nova {
 Scene::Scene()
 {
 }
 void Scene::Init() {
     m_renderer.Init();
 }
+
+void Scene::Shutdown() {
+    // Здесь можно добавить очистку ресурсов, если необходимо
+}
+
 void Scene::SetViewProjection(const glm::mat4& viewProj) {
     m_viewProj = viewProj;
 }

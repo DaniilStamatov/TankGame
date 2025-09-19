@@ -1,10 +1,11 @@
 #include <glad/glad.h>
 #include "../Shader.h"
-namespace engine {
-class OpenGLShader : public Shader {
+namespace nova {
+class OpenGLShader final: public Shader {
 public:
+    OpenGLShader(const std::string& filename);
     OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc);
-    ~OpenGLShader() override;
+    virtual ~OpenGLShader();
 
     void Bind() const override;
     void Unbind() const override;

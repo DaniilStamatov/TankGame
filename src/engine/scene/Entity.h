@@ -2,7 +2,7 @@
 #include "entt.hpp"
 #include "Scene.h"
 #include "Components.h"
-namespace engine {
+namespace nova {
     class Entity {
         public:
         Entity() = default;

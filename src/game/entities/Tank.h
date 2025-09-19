@@ -1,22 +1,22 @@
 #pragma once
 #include <glm/glm.hpp>
-#include "../../engine/scene/Components.h"
-#include "GameObject.h"
-namespace game {
+#include "components/TankComponent.h"
+#include "../../engine/scene/GameObject.h"
+namespace tanks {
 
 class Tank: public GameObject {
 public:
-    Tank(engine::Scene& scene, const glm::vec3& pos)
+    Tank(nova::Scene& scene, const glm::vec3& pos)
         : GameObject(scene) 
     {
-        auto& transform = m_entity.GetComponent<engine::TransformComponent>();
+        auto& transform = m_entity.GetComponent<nova::TransformComponent>();
         transform.position = pos;
-        transform.scale = {0.5f, 0.5f, 1.0f};
+        transform.scale = {50.0f, 50.0f, 1.0f};
 
-        auto& sprite = m_entity.AddComponent<engine::SpriteRendererComponent>();
+        auto& sprite = m_entity.AddComponent<nova::SpriteRendererComponent>();
         sprite.color = glm::vec4(0, 1, 0, 1);
-
-       // m_entity.AddComponent<TankComponent>(100, 5.0f); // hp, speed
+ 
+        m_entity.AddComponent<TankComponent>(100, 5.0f); 
     }
     void OnInit() override {
          

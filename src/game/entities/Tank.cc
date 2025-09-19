@@ -1,16 +1,19 @@
 #include "Tank.h"
 #include <iostream>
-namespace game {
+namespace tanks {
 
 
 void Tank::move(const glm::vec2& delta)
 {
-    Transform().position.x += delta.x;
-    Transform().position.y += delta.y;
-    std::cout << "Tank moved to position: (" 
-              << Transform().position.x << ", " 
-              << Transform().position.y << ", "
-              << Transform().position.z << ")\n";
+    glm::vec3 newPos = Transform().position + glm::vec3(glm::vec2(delta) * GetComponent<TankComponent>().speed, 0.0f);
+
+    float minX = 0.0f, maxX = 800.0f - Transform().scale.x;
+    float minY = 0.0f, maxY = 600.0f - Transform().scale.y;
+
+    newPos.x = glm::clamp(newPos.x, minX, maxX);
+    newPos.y = glm::clamp(newPos.y, minY, maxY);
+
+    Transform().position = newPos;
 }
 
 void Tank::rotate(float angle)

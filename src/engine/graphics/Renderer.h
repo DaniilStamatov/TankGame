@@ -2,7 +2,8 @@
 #include <glm/vec3.hpp>
 #include <memory>
 #include "Shader.h"
-namespace engine {
+#include "VertexArrayObject.h"
+namespace nova {
 class Renderer2D {
 public:
     void Init();
@@ -17,5 +18,8 @@ private:
     
     bool m_initialized;
     std::unique_ptr<Shader> m_shader;
+    std::shared_ptr<VertexArrayObject> m_vao;
+    std::shared_ptr<VertexBuffer> m_vbo;
+    std::shared_ptr<IndexBuffer> m_ebo;
 };
 }

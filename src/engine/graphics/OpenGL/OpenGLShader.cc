@@ -1,11 +1,42 @@
 #include "OpenGLShader.h"
 #include <iostream>
 #include <memory>
-namespace engine {
+#include <sstream>
+#include <fstream>
+namespace nova {
+std::unique_ptr<Shader> CreateOpenGLShader(const std::string& filename) {
+    return std::make_unique<OpenGLShader>(filename);
+}
 std::unique_ptr<Shader> CreateOpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc) {
     return std::make_unique<OpenGLShader>(vertexSrc, fragmentSrc);
 }
-engine::OpenGLShader::OpenGLShader(const std::string &vertexSrc, const std::string &fragmentSrc)  
+OpenGLShader::OpenGLShader(const std::string& filename) {
+    std::ifstream stream(filename);
+    std::string line;
+    enum ShaderType { NONE = -1, VERTEX = 0, FRAGMENT = 1 };
+    std::stringstream ss[2];
+    ShaderType type = ShaderType::NONE;
+    while (getline(stream, line)) {
+      if (line.find("#shader") != std::string::npos) {
+        if (line.find("vertex") != std::string::npos) {
+          type = ShaderType::VERTEX;
+        } else if (line.find("fragment") != std::string::npos) {
+          type = ShaderType::FRAGMENT;
+        }
+      } else {
+        ss[(int)type] << line << '\n';
+      }
+    }
+
+    m_rendererID = glCreateProgram();
+    GLuint vertexShader = CompileShader(GL_VERTEX_SHADER, ss[0].str());
+    GLuint fragmentShader = CompileShader(GL_FRAGMENT_SHADER, ss[1].str());
+    glAttachShader(m_rendererID, vertexShader);
+    glAttachShader(m_rendererID, fragmentShader);
+    glLinkProgram(m_rendererID);
+}
+
+OpenGLShader::OpenGLShader(const std::string &vertexSrc, const std::string &fragmentSrc)  
 {
     m_rendererID = glCreateProgram();
     GLuint vertexShader = CompileShader(GL_VERTEX_SHADER, vertexSrc);
@@ -29,6 +60,7 @@ void OpenGLShader::Unbind() const
 {
     glUseProgram(0);
 }
+
 
 void OpenGLShader::SetMat4(const std::string &name, const glm::mat4 &matrix)
 {
