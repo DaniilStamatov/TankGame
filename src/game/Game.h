@@ -3,6 +3,7 @@
 #include "entities/Tank.h"
 #include "engine/scene/Scene.h"
 #include "engine/scene/Entity.h"
+#include "entities/Bullet.h"
 #include <iostream>
 namespace tanks {
 class Game : public IGame {
@@ -37,6 +38,7 @@ private:
     glm::vec3 m_startPos;
     nova::Scene m_scene;
     std::unique_ptr<Tank> m_tank;
+    std::vector<std::shared_ptr<Bullet>> m_bullets;
     nova::Entity m_player;
 };
 }

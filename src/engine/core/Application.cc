@@ -18,11 +18,11 @@ void Application::Run()
 
         if (glfwGetKey(m_window.GetGLFWwindow(), GLFW_KEY_W) == GLFW_PRESS)
             input.y += 100.0f;
-        if (glfwGetKey(m_window.GetGLFWwindow(), GLFW_KEY_S) == GLFW_PRESS)
+        else if (glfwGetKey(m_window.GetGLFWwindow(), GLFW_KEY_S) == GLFW_PRESS)
             input.y -= 100.0f;
-        if (glfwGetKey(m_window.GetGLFWwindow(), GLFW_KEY_D) == GLFW_PRESS)
+        else if (glfwGetKey(m_window.GetGLFWwindow(), GLFW_KEY_D) == GLFW_PRESS)
             input.x += 100.0f;
-        if (glfwGetKey(m_window.GetGLFWwindow(), GLFW_KEY_A) == GLFW_PRESS)
+        else if (glfwGetKey(m_window.GetGLFWwindow(), GLFW_KEY_A) == GLFW_PRESS)
             input.x -= 100.0f;
 
         m_game.ProcessInput(input, deltaTime);
