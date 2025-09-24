@@ -7,6 +7,7 @@
 #include "entities/Bullet.h"
 #include "entities/Tank.h"
 #include "events/GameEvents.h"
+#include "entities/TankController.h"
 #include <iostream>
 namespace tanks {
 class Game : public IGame {
@@ -22,6 +23,7 @@ public:
   void OnInit() override {
     m_scene.Init();
     CreatePlayerTank(m_startPos);
+    m_playerTank->OnInit();
     auto &eventSystem = nova::EventSystem::Instance();
     eventSystem.Subscribe<tanks::BulletFiredEvent>(
         [this](const tanks::BulletFiredEvent &event) { CreateBullet(event); });
@@ -29,7 +31,6 @@ public:
   void Update(float dt) override {
     m_playerTank->OnUpdate(dt);
 
-    ProcessInput(dt);
     for (auto &object : m_objects) {
       object->OnUpdate(dt);
     }
@@ -63,6 +64,7 @@ public:
 
   void CreatePlayerTank(const glm::vec3 &startPos) {
     m_playerTank = std::make_unique<Tank>(m_scene, startPos);
+    m_playerTank->SetController(std::make_unique<PlayerController>());
   }
 
   void CreateBullet(const BulletFiredEvent &event) {

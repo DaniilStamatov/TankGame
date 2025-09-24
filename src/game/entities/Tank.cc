@@ -1,19 +1,28 @@
 #include "Tank.h"
 #include "engine/core/EventSystem.h"
 #include "game/events/GameEvents.h"
+#include "TankController.h"
 #include <iostream>
 namespace tanks {
 Tank::Tank(nova::Scene &scene, const glm::vec3 &pos) : GameObject(scene) {
   auto &transform = m_entity.GetComponent<nova::TransformComponent>();
   transform.position = pos;
   transform.scale = {100.0f, 100.0f, 1.0f};
-  auto &sprite = m_entity.AddComponent<nova::SpriteRendererComponent>();
-  sprite.texture = nova::Texture::Create("res/textures/tank.jpeg");
-
+  
   auto &tank = m_entity.AddComponent<TankComponent>(100, 500.0f);
   tank.fireRate = 1.0f;
   tank.bulletSpeed = 800.0f;
   m_cooldown = GetComponent<TankComponent>().fireRate;
+}
+
+void Tank::SetController(std::unique_ptr<TankController> controller)
+{
+  m_controller = std::move(controller);
+}
+
+void Tank::OnInit() {
+  auto &sprite = m_entity.AddComponent<nova::SpriteRendererComponent>();
+  sprite.texture = nova::Texture::Create("res/textures/tank.jpeg");
 }
 
 void Tank::move(const glm::vec2 &delta) {
@@ -48,10 +57,15 @@ void Tank::move(const glm::vec2 &delta) {
 }
 
 void Tank::OnUpdate(float dt) {
+
   m_cooldown -= 0.016f;
 
   if (m_cooldown < 0) {
     m_cooldown = 0;
+  }
+  if(m_controller) {
+    m_controller->Update(*this, dt);
+    move(m_controller->GetInput() * dt);
   }
 }
 void Tank::shoot() {

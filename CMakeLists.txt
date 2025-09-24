@@ -15,6 +15,7 @@ set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
+
 add_subdirectory(vendor/glfw)
 
 # GLAD
@@ -39,7 +40,7 @@ file(GLOB_RECURSE SOURCE_FILES
 )
 
 add_executable(TanksGame ${SOURCE_FILES})
-target_link_libraries(TanksGame PRIVATE glm::glm glfw glad stb)
+target_link_libraries(TanksGame PRIVATE glm::glm glfw glad stb )
 target_include_directories(TanksGame PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src
     vendor/glm
