@@ -1,9 +1,9 @@
-#include "game/entities/Tank.h"
 #include "engine/core/Application.h"
 #include "game/Game.h"
+#include "game/entities/Tank.h"
 int main() {
-    tanks::Game game({100, 100, 0}, 100);
-    nova::Application app(800, 600, "TankGame", game);
-    app.Run();
-    return 0;
+  tanks::Game game({100, 100, 0}, 100);
+  nova::Application app(800, 600, "TankGame", game);
+  app.Run();
+  return 0;
 }
