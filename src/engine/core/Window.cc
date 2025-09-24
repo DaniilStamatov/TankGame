@@ -1,5 +1,21 @@
 #include "Window.h"
 #include <stdexcept>
+#include <iostream>
+#include "Input.h"
+namespace nova {
+static std::unordered_map<int, nova::KeyCode> keyMap = {
+    {GLFW_KEY_W, nova::KeyCode::W},
+    {GLFW_KEY_A, nova::KeyCode::A},
+    {GLFW_KEY_S, nova::KeyCode::S},
+    {GLFW_KEY_D, nova::KeyCode::D},
+    {GLFW_KEY_SPACE, nova::KeyCode::Space},
+    {GLFW_KEY_ENTER, nova::KeyCode::Enter},
+    {GLFW_KEY_ESCAPE, nova::KeyCode::Escape},
+    {GLFW_KEY_UP, nova::KeyCode::Up},
+    {GLFW_KEY_DOWN, nova::KeyCode::Down},
+    {GLFW_KEY_LEFT, nova::KeyCode::Left},
+    {GLFW_KEY_RIGHT, nova::KeyCode::Right}
+};
 Window::Window(int width, int height, const std::string &title)
 {
     if(!glfwInit()) {
@@ -28,6 +44,14 @@ Window::~Window()
 void Window::PollEvents()
 {
     glfwPollEvents();
+    
+    for (const auto& [glfwKey, ourKey] : keyMap) {
+        bool pressed = glfwGetKey(m_window, glfwKey) == GLFW_PRESS;
+        
+        InputSystem::Instance().SetKeyState(ourKey, pressed);
+    }
+
+    InputSystem::Instance().Update();
 }
 
 bool Window::ShouldClose() const
@@ -38,4 +62,6 @@ bool Window::ShouldClose() const
 void Window::SwapBuffers()
 {
     glfwSwapBuffers(m_window);
+}
+
 }

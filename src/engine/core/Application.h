@@ -1,7 +1,8 @@
 #pragma once
 #include "Window.h"
 #include "IGame.h"
-
+namespace nova {
+    
 class Application {
     public:
         Application(int width, int height, const std::string& title, IGame& game);
@@ -12,3 +13,4 @@ class Application {
         Window m_window;
         IGame& m_game;
 };
+}

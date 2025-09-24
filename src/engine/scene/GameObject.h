@@ -26,6 +26,7 @@ public:
         return m_entity.GetComponent<T>();
     }
     
+    nova::Scene& GetScene() { return m_scene; }
 protected:
     nova::Scene& m_scene;
     nova::Entity m_entity;

@@ -1,5 +1,7 @@
 #include "Tank.h"
 #include <iostream>
+#include "game/events/GameEvents.h"
+#include "engine/core/EventSystem.h"
 namespace tanks {
 Tank::Tank(nova::Scene &scene, const glm::vec3 &pos) : GameObject(scene) 
 {
@@ -9,7 +11,11 @@ Tank::Tank(nova::Scene &scene, const glm::vec3 &pos) : GameObject(scene)
     auto& sprite = m_entity.AddComponent<nova::SpriteRendererComponent>();
     sprite.texture = nova::Texture::Create("res/textures/tank.jpeg");
 
-    m_entity.AddComponent<TankComponent>(100, 5.0f); 
+    auto& tank = m_entity.AddComponent<TankComponent>(100, 500.0f); 
+    tank.fireRate = 1.0f;
+    tank.bulletSpeed = 800.0f;
+    m_cooldown = GetComponent<TankComponent>().fireRate;
+
 }
 
 void Tank::move(const glm::vec2& delta)
@@ -44,9 +50,42 @@ void Tank::move(const glm::vec2& delta)
     }
 }
 
+void Tank::OnUpdate(float dt) {
+    m_cooldown -= 0.016f;
+
+    if(m_cooldown < 0) {
+        m_cooldown = 0;
+    }
+}
 void Tank::shoot()
 {
-    // Shooting logic here
+    if (m_cooldown > 0) return;
+    
+    auto& transform = Transform();
+    auto& tankComp = GetComponent<TankComponent>();
+    
+    tanks::BulletFiredEvent event{
+        Transform().position,    
+        GetForwardDirection(),   
+        tankComp.bulletSpeed,    
+        tankComp.damage,         
+        m_entity                 
+    };
+    
+    nova::EventSystem::Instance().Notify(event);
+    
+    m_cooldown = tankComp.fireRate;
 }
 
+glm::vec2 Tank::GetForwardDirection() const
+{
+   const auto& t = Transform();
+    switch (static_cast<int>(t.rotation.z)) {
+        case 0:   return {0.0f, 1.0f};   
+        case 180: return {0.0f, -1.0f};  
+        case -90: return {1.0f, 0.0f};   
+        case 90:  return {-1.0f, 0.0f};  
+        default:  return {0.0f, 1.0f};   
+    }
+}
 }

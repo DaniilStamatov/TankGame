@@ -6,5 +6,5 @@ class IGame {
         virtual void Update(float dt) = 0;
         virtual void Render() = 0;
         virtual void OnInit() = 0;
-        virtual void ProcessInput(const glm::vec2& input, float dt) = 0; 
+        virtual void ProcessInput(float dt) = 0; 
 };

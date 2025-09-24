@@ -9,13 +9,16 @@ class Tank: public GameObject {
 public:
     Tank(nova::Scene& scene, const glm::vec3& pos);
     void OnInit() override {
-         
     }
+    void OnUpdate(float dt) override;
     void move(const glm::vec2& delta);
     void shoot();
+    glm::vec2 GetForwardDirection() const;
+
 
 private:
-   int m_health;
+    float m_cooldown;
+    int m_health;
 }; 
 
 }
